@@ -1,7 +1,6 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +9,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.annotation.PostConstruct;
+import java.security.Principal;
 import java.util.Collections;
 
 @Controller
@@ -21,11 +21,11 @@ public class UserController {
     @PostConstruct
     public void addUser() {
         User user = new User();
-        user.setName("ivan");
-        user.setSurName("ivanov");
+        user.setName("Ivan");
+        user.setSurName("Ivanov");
         user.setAge(24);
         user.setPassword("ivanov");
-        user.setRoles(Collections.singletonList(new Role("ROLE_ADMIN")));
+        user.setRoles(Collections.singleton(new Role("ROLE_ADMIN")));
         userService.save(user);
     }
 
@@ -35,20 +35,11 @@ public class UserController {
     }
 
     @GetMapping()
-    public String index(Model model) {
+    public String index(@ModelAttribute("user") User user, Principal principal, Model model) {
+        User userPrinc = userService.findByUserName(principal.getName());
         model.addAttribute("users", userService.findAll());
+        model.addAttribute("princ", userPrinc);
         return "index";
-    }
-
-    @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("user", userService.findById(id));
-        return "show";
-    }
-
-    @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user) {
-        return "new";
     }
 
     @PostMapping()

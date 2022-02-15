@@ -1,19 +1,138 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <meta charset="UTF-8">
-    <title>Index</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Admin page</title>
 </head>
 <body>
 
-<div th:each="user : ${users}">
-    <a th:href="@{/users/{id}(id=${user.getId()})}"
-       th:text="${user.getName() + '   '+ user.getSurName()+ ',  ' + user.getAge()}">user</a>
+<div class="row">
+    <div class="col">
+        <h5 th:text="${princ.getSurName()}+' with role: '+${princ.getRoles()}" class="bg-dark text-white">My Page</h5>
+    </div>
+    <div>
+        <a th:href="@{/logout}" class="bg-dark text-white">
+            <button type="button">Logout</button>
+        </a>
+    </div>
 </div>
-<br/>
-<hr/>
 
-<a href="/users/new">Create new user</a>
-<a th:href="@{/logout}">Logout</a>
+<div class="row">
+    <div class="col-sm-2">
+        <nav class="navbar bg-light">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a class="nav-link" th:href="@{/user}">
+                        <p class="text-body">User</p>
+                    </a>
+                </li>
+                <li class="list-group-item active">
+                    <a class="nav-link" th:href="@{/users}">
+                        <p class="text-body">Admin</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-sm-10">
+        <div>
+            <h3>Admin panel</h3>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">User Table</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu1">New User</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane container active" id="home">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">SurName</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Delete</th>
+                        <th scope="col">Edit</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.getId()}">1</td>
+                        <td th:text="${user.getName()}">Mark</td>
+                        <td th:text="${user.getSurName()}">Otto</td>
+                        <td th:text="${user.getAge()}">age</td>
+                        <td th:text="${user.roles}">role</td>
+                        <td>
+                            <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}" >
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                        <td>
+                            <a th:href="@{/users/{id}/edit(id=${user.getId()})}">
+                                <button type="button" class="btn btn-primary">Edit</button>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane container fade" id="menu1">
+                <div class="col">
+                    <h5 class="bg-secondary text-white">Add new User</h5>
+                </div>
+                <form th:method="POST" th:action="@{/users}" th:object="${user}" id="new">
+                    <div class="form-group" align="center">
+                        <label for="name">Enter name:</label>
+                        <br/>
+                        <input required type="text" th:field="*{name}" id="name"/>
+                    </div>
+                    <br/>
+                    <div class="form-group" align="center">
+                        <label for="surname">Enter surname:</label>
+                        <br/>
+                        <input required type="text" th:field="*{surName}" id="surname"/>
+                    </div>
+                    <br/>
+                    <div class="form-group" align="center">
+                        <label for="age" >Enter age:</label>
+                        <br/>
+                        <input type="number" th:field="*{age}" id="age"/>
+                    </div>
+                    <br/>
+                    <div class="form-group" align="center">
+                        <label for="password">Enter password:</label>
+                        <br/>
+                        <input required type="text" th:field="*{password}" id="password"/>
+                    </div>
+                    <br/>
+                    <div class="form-group" align="center">
+                        <label for="role">Enter role:</label>
+                        <br/>
+                        <select id="role" form="new" th:field="*{roles}">
+                            <option value="ROLE_USER">ROLE_USER</option>
+                            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        </select>
+                    </div>
+                    <br/>
+                    <div align="center">
+                        <button type="submit" value="Create!" class="btn btn-primary">Add new User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
