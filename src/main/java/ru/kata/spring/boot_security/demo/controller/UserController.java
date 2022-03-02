@@ -10,7 +10,8 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.annotation.PostConstruct;
 import java.security.Principal;
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/users")
@@ -25,7 +26,10 @@ public class UserController {
         user.setSurName("Ivanov");
         user.setAge(24);
         user.setPassword("ivanov");
-        user.setRoles(Collections.singleton(new Role("ROLE_ADMIN")));
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(new Role("ROLE_ADMIN"));
+        //roleSet.add(new Role("ROLE_USER"));
+        user.setRoles(roleSet);
         userService.save(user);
     }
 
@@ -48,14 +52,8 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("user", userService.findById(id));
-        return "edit";
-    }
-
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user, @PathVariable("id") int id) {
+    public String update(@ModelAttribute("person") User user, @PathVariable("id") int id) {
         userService.update(id, user);
         return "redirect:/users";
     }

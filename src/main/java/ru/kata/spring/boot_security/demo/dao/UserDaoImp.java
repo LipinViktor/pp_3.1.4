@@ -12,6 +12,7 @@ import java.util.List;
 
 @Repository
 public class UserDaoImp implements UserDao {
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -32,11 +33,11 @@ public class UserDaoImp implements UserDao {
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         em.persist(user);
-
     }
 
     @Override
     public void update(long id, User user) {
+        System.out.println(user);
         user.setId(id);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         em.merge(user);
