@@ -10,7 +10,6 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.annotation.PostConstruct;
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.Set;
 
 @Controller
@@ -18,18 +17,13 @@ import java.util.Set;
 public class UserController {
 
     private final UserService userService;
+    @Autowired
+    private Set<Role> allRoles;
 
     @PostConstruct
     public void addUser() {
-        User user = new User();
-        user.setName("Ivan");
-        user.setSurName("Ivanov");
-        user.setAge(24);
-        user.setPassword("ivanov");
-        Set<Role> roleSet = new HashSet<>();
-        roleSet.add(new Role("ROLE_ADMIN"));
-        //roleSet.add(new Role("ROLE_USER"));
-        user.setRoles(roleSet);
+        User user = new User("Ivan","Ivanov",25,"ivanov");
+        user.setRoles(allRoles);
         userService.save(user);
     }
 

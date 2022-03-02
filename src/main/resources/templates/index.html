@@ -138,11 +138,11 @@
                                 </div>
                                 <br/>
                                 <div align="center">
-                                    <label for="role1">Enter role: </label>
+                                    <label for="roles1">Enter role: </label>
                                     <br/>
-                                    <select id="role1" form="edituser" name="roles">
-                                        <option th:value="${new Role("")}">ROLE_USER</option>
-                                        <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                                    <select id="roles1" form="new" name="roles" th:value="${person.getRoles()}">
+                                        <option th:value="${person.setRoles('')}">ADMIN</option>
+                                        <option value="ROLE_USER">USER</option>
                                     </select>
                                 </div>
                                 <br/>
