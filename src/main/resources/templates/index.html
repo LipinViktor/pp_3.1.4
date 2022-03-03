@@ -99,58 +99,94 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="person : ${users}">
-                        <td th:text="${person.getId()}">1</td>
-                        <td th:text="${person.getName()}">Mark</td>
-                        <td th:text="${person.getSurName()}">Otto</td>
-                        <td th:text="${person.getAge()}">age</td>
-                        <td th:text="${person.getAuthorities()}">role</td>
+                    <tr th:each="user1:${users}">
+                        <td th:text="${user1.getId()}">1</td>
+                        <td th:text="${user1.getName()}">Mark</td>
+                        <td th:text="${user1.getSurName()}">Otto</td>
+                        <td th:text="${user1.getAge()}">age</td>
+                        <td th:text="${user1.getAuthorities()}">role</td>
                         <td>
-                            <form th:method="DELETE" th:action="@{/users/{id}(id=${person.getId()})}">
+                            <form th:method="DELETE" th:action="@{/users/{id}(id=${user1.getId()})}">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </td>
                         <td>
 
-                            <form th:method="PATCH" th:action="@{/users/{id}(id=${person.getId()})}" th:object="${person}" id="edituser">
-                                <div align="center">
-                                    <label for="name1">Enter name: </label>
-                                    <br/>
-                                    <input required type="text" name="name" th:value="${person.getName()}" id="name1"/>
-                                </div>
-                                <br/>
-                                <div align="center">
-                                    <label for="surname1">Enter surname: </label>
-                                    <br/>
-                                    <input required type="text" name="surName" th:value="${person.getSurName()}" id="surname1"/>
-                                </div>
-                                <br/>
-                                <div align="center">
-                                    <label for="age1">Enter age: </label>
-                                    <br/>
-                                    <input type="number" name="age" th:value="${person.getAge()}" id="age1"/>
-                                </div>
-                                <br/>
-                                <div align="center">
-                                    <label for="password1">Enter password: </label>
-                                    <br/>
-                                    <input required type="password" name="password" th:value="${person.getPassword()}" id="password1"/>
-                                </div>
-                                <br/>
-                                <div align="center">
-                                    <label for="roles1">Enter role: </label>
-                                    <br/>
-                                    <select id="roles1" form="new" name="roles" th:value="${person.getRoles()}">
-                                        <option th:value="${person.setRoles('')}">ADMIN</option>
-                                        <option value="ROLE_USER">USER</option>
-                                    </select>
-                                </div>
-                                <br/>
-                                <div align="center">
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                </div>
-                            </form>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal">
+                                    Edit
+                                </button>
+                        </td>
+                        <td>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                     aria-labelledby="exampleModalLabel"
+                                     aria-hidden="true" th:id="exampleModal">
+                                    <form th:method="PATCH" th:action="@{/users/{id}(id=${user1.getId()})}"
+                                          th:object="${user1}" id="edituser">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div align="center">
+                                                    <label for="name1">Enter name: </label>
+                                                    <br/>
+                                                    <input required type="text" name="name"
+                                                           th:value="${user1.getName()}" id="name1"/>
+                                                </div>
+                                                <br/>
+                                                <div align="center">
+                                                    <label for="surname1">Enter surname: </label>
+                                                    <br/>
+                                                    <input required type="text" name="surName"
+                                                           th:value="${user1.getSurName()}" id="surname1"/>
+                                                </div>
+                                                <br/>
+                                                <div align="center">
+                                                    <label for="age1">Enter age: </label>
+                                                    <br/>
+                                                    <input type="number" name="age" th:value="${user1.getAge()}"
+                                                           id="age1"/>
+                                                </div>
+                                                <br/>
+                                                <div align="center">
+                                                    <label for="password1">Enter password: </label>
+                                                    <br/>
+                                                    <input required type="password" name="password"
+                                                           th:value="${user1.getPassword()}" id="password1"/>
+                                                </div>
+                                                <br/>
+                                                <div align="center">
+                                                    <label for="roles1">Enter role: </label>
+                                                    <br/>
+                                                    <select id="roles1" form="edituser" name="roles">
+                                                        <option th:each="role:${roles}" th:text="${role.getName()}">
+                                                            ROLE
+                                                        </option>
 
+                                                    </select>
+                                                </div>
+                                                <br/>
+                                                <div align="center">
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Edit</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
                         </td>
                     </tr>
                     </tbody>
@@ -184,9 +220,9 @@
                     <div class="form-group" align="center">
                         <label for="role">Enter role:</label>
                         </br>
-                        <select id="role" form="new" th:field="*{roles}">
-                            <option value="ROLE_USER">ROLE_USER</option>
-                            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        <select id="role" form="new" name="roles">
+                            <option th:each="role:${roles}" th:text="${role.getName()}">ROLE</option>
+
                         </select>
                     </div>
                     <div align="center">

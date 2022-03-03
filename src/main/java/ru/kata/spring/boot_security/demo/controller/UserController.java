@@ -11,6 +11,7 @@ import ru.kata.spring.boot_security.demo.service.UserService;
 import javax.annotation.PostConstruct;
 import java.security.Principal;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
@@ -23,7 +24,7 @@ public class UserController {
     @PostConstruct
     public void addUser() {
         User user = new User("Ivan","Ivanov",25,"ivanov");
-        user.setRoles(allRoles);
+        user.setRoles(allRoles.stream().filter(n->n.getName().contains("ADMIN")).collect(Collectors.toList()));
         userService.save(user);
     }
 
@@ -37,6 +38,7 @@ public class UserController {
         User userPrinc = userService.findByUserName(principal.getName());
         model.addAttribute("users", userService.findAll());
         model.addAttribute("princ", userPrinc);
+        model.addAttribute("roles", allRoles);
         return "index";
     }
 
@@ -47,7 +49,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") User user, @PathVariable("id") int id) {
+    public String update(@ModelAttribute("user1") User user, @PathVariable("id") long id) {
         userService.update(id, user);
         return "redirect:/users";
     }
