@@ -8,16 +8,21 @@
     <title>User page</title>
 </head>
 <body>
-    <div class="row">
-        <div class="col">
-            <h5 th:text="${user.getSurName()}+' with role: '+ ${user.getRoles()}" class="bg-dark text-white">My Page</h5>
-        </div>
-        <div >
-            <a th:href="@{/logout}">
-                <button type="button" class="bg-dark text-white">Logout</button>
-            </a>
-        </div>
+<div class="row">
+    <div class="col" style="padding: inherit">
+        <h5 th:text="${user.getSurName()} +' with role: '+ ${user.getRoles()}" class="bg-dark text-white"
+            style="padding-left: 25px">
+            My Page
+        </h5>
     </div>
+    <div class="col" align="right" style="padding: inherit">
+        <h5 class="bg-dark text-white">
+            <a th:href="@{/logout}" style="padding-right: 25px">
+                Logout
+            </a>
+        </h5>
+    </div>
+</div>
     <div class="row">
         <div class="col-sm-2">
             <nav class="navbar bg-light">
