@@ -104,7 +104,7 @@
                         <td th:text="${user1.getName()}">Mark</td>
                         <td th:text="${user1.getSurName()}">Otto</td>
                         <td th:text="${user1.getAge()}">age</td>
-                        <td th:text="${user1.getAuthorities()}">role</td>
+                        <td th:text="${user1.getRoles()}">role</td>
                         <td>
                             <form th:method="DELETE" th:action="@{/users/{id}(id=${user1.getId()})}">
                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -125,7 +125,7 @@
                                      aria-labelledby="exampleModalLabel"
                                      aria-hidden="true">
                                     <form th:method="PATCH" th:action="@{/users/{id}(id=${user1.getId()})}"
-                                          th:object="${user1}" id="edituser">
+                                          th:object="${user1}" th:id="${'patch'+user1.getId()}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -165,11 +165,9 @@
                                                 <div align="center">
                                                     <label for="roles1">Enter role: </label>
                                                     <br/>
-                                                    <select id="roles1" form="edituser" name="roles">
-                                                        <option th:each="role:${roles}" th:text="${role.getName()}">
-                                                            ROLE
-                                                        </option>
-
+                                                    <select id="roles1" th:form="${'patch'+user1.getId()}" name="roles">
+                                                        option value="ROLE_ADMIN" th:text="ROLE_ADMIN"></option>
+                                                        <option value="ROLE_USER" th:text="ROLE_USER"></option>
                                                     </select>
                                                 </div>
                                                 <br/>
@@ -221,8 +219,8 @@
                         <label for="role">Enter role:</label>
                         </br>
                         <select id="role" form="new" name="roles">
-                            <option th:each="role:${roles}" th:text="${role.getName()}">ROLE</option>
-
+                            <option value="ROLE_ADMIN" th:text="ROLE_ADMIN"></option>
+                            <option value="ROLE_USER" th:text="ROLE_USER"></option>
                         </select>
                     </div>
                     <div align="center">

@@ -37,7 +37,6 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void update(long id, User user) {
-        System.out.println(user);
         user.setId(id);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         em.merge(user);

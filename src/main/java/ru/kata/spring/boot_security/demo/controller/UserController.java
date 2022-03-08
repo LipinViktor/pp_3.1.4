@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,11 +35,9 @@ public class UserController {
     }
 
     @GetMapping()
-    public String index(@ModelAttribute("user") User user, Principal principal, Model model) {
-        User userPrinc = userService.findByUserName(principal.getName());
+    public String index(@ModelAttribute("user") User user, @AuthenticationPrincipal User userPrinc, Model model) {
         model.addAttribute("users", userService.findAll());
         model.addAttribute("princ", userPrinc);
-        model.addAttribute("roles", allRoles);
         return "index";
     }
 
