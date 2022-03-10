@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li class="list-group-item active">
-                    <a class="nav-link" th:href="@{/users}">
+                    <a class="nav-link" th:href="@{/admin}">
                         <p class="text-body">Admin</p>
                     </a>
                 </li>
@@ -106,7 +106,7 @@
                         <td th:text="${user1.getAge()}">age</td>
                         <td th:text="${user1.getRoles()}">role</td>
                         <td>
-                            <form th:method="DELETE" th:action="@{/users/{id}(id=${user1.getId()})}">
+                            <form th:method="DELETE" th:action="@{/admin/{id}(id=${user1.getId()})}">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </td>
@@ -124,7 +124,7 @@
                                 <div class="modal fade" th:id="${'edit'+user1.getId()}" tabindex="-1"
                                      aria-labelledby="exampleModalLabel"
                                      aria-hidden="true">
-                                    <form th:method="PATCH" th:action="@{/users/{id}(id=${user1.getId()})}"
+                                    <form th:method="PATCH" th:action="@{/admin/{id}(id=${user1.getId()})}"
                                           th:object="${user1}" th:id="${'patch'+user1.getId()}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -166,15 +166,11 @@
                                                     <label for="roles1">Enter role: </label>
                                                     <br/>
                                                     <select id="roles1" th:form="${'patch'+user1.getId()}" name="roles">
-                                                        option value="ROLE_ADMIN" th:text="ROLE_ADMIN"></option>
+                                                        <option value="ROLE_ADMIN" th:text="ROLE_ADMIN"></option>
                                                         <option value="ROLE_USER" th:text="ROLE_USER"></option>
                                                     </select>
                                                 </div>
                                                 <br/>
-                                                <div align="center">
-                                                    <button type="submit" class="btn btn-primary">Update</button>
-                                                </div>
-
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -194,7 +190,7 @@
                 <div class="col">
                     <h5 class="bg-secondary text-white">Add new User</h5>
                 </div>
-                <form th:method="POST" th:action="@{/users}" th:object="${user}" id="new">
+                <form th:method="POST" th:action="@{/admin}" th:object="${user}" id="new">
                     <div class="form-group" align="center">
                         <label for="name">Enter name:</label>
                         </br>
