@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import ru.kata.spring.boot_security.demo.model.Role;
 
 import java.util.HashSet;
@@ -21,7 +22,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public WebSecurityConfig(SuccessUserHandler successUserHandler) {
         this.successUserHandler = successUserHandler;
     }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -58,4 +58,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         set.add(roleUser);
         return set;
     }
+
+
 }
