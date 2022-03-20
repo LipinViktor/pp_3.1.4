@@ -38,6 +38,7 @@ public class MyRestController {
 
     @PutMapping("/users")
     public User updateUser(@RequestBody User user) {
+        System.out.println("!!!!!Я ПУТ_РЕСТ И Я ВКЛЮЧИЛСЯ!!!!!"+user);
         userService.update(user.getId(), user);
         return userService.findById(user.getId());
     }

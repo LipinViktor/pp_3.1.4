@@ -23,9 +23,9 @@ public class AdminController {
 
     @PostConstruct
     public void addUser() {
-        User user = new User("Ivan","Ivanov",25,"ivanov");
-        user.setRoles(allRoles.stream().filter(n->n.getName().contains("ADMIN")).collect(Collectors.toList()));
-        userService.save(user);
+        User user1 = new User("Ivan","Ivanov",25,"ivanov");
+        user1.setRoles(allRoles.stream().filter(n->n.getName().contains("ADMIN")).collect(Collectors.toList()));
+        userService.save(user1);
     }
 
     @Autowired
@@ -35,7 +35,6 @@ public class AdminController {
 
     @GetMapping()
     public String index(@ModelAttribute("user") User user, @AuthenticationPrincipal User userPrinc, Model model) {
-        model.addAttribute("users", userService.findAll());
         model.addAttribute("princ", userPrinc);
         return "admin";
     }
