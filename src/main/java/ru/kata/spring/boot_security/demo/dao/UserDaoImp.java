@@ -3,17 +3,20 @@ package ru.kata.spring.boot_security.demo.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
+@Transactional
 public class UserDaoImp implements UserDao {
 
     @Autowired
@@ -37,19 +40,31 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void save(User user) {
-        if (user.getRoles() == null) {
-            user.setRoles(allRoles.stream().filter(n -> n.getName().contains("USER")).collect(Collectors.toList()));
-        }
+        System.out.println("++++++++Это Сэйв ДАО");
+        String result;
+        TypedQuery<String> str;
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         em.persist(user);
+        User userDb = findByUserName(user.getName());
+        Collection<Role> roles = user.getRoles();
+        for (Role r : roles) {
+            if (r.getName().contains("ROLE_ADMIN")) {
+                result = String.format("INSERT INTO viktorconnect.user_roles (user_id, role_id) VALUES (%d, 1)", userDb.getId());
+                int a = em.createNativeQuery(result).executeUpdate();
+            } else {
+                result = String.format("INSERT INTO viktorconnect.user_roles (user_id, role_id) VALUES (%d, 2)", userDb.getId());
+                int b = em.createNativeQuery(result).executeUpdate();
+                System.out.println(b);
+            }
+        }
+
     }
 
     @Override
     public void update(long id, User user) {
-        //user.setId(id);
+        user.setId(id);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         em.merge(user);
-        System.out.println("!!!!!Я МЕТОД АБДАТЕ И Я ВКЛЮЧИЛСЯ!!!!!"+user);
     }
 
     @Override

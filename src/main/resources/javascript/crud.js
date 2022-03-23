@@ -137,7 +137,7 @@ $(function() {
         })
             setTimeout(function () {
                 newTable();
-            }, 900)
+            }, 5000)
         $("#nav-home-tab").tab("show")
     })
 })

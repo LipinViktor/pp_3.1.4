@@ -9,7 +9,6 @@ import ru.kata.spring.boot_security.demo.model.User;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImp implements UserService {
 
     private final UserDao userDao;
@@ -31,7 +30,9 @@ public class UserServiceImp implements UserService {
 
     @Override
     public void save(User user) {
+        System.out.println("-----------Метод сохранения сервис начало");
         userDao.save(user);
+        System.out.println("===========Метод сохранения сервис конец...");
     }
 
     @Override
@@ -44,8 +45,4 @@ public class UserServiceImp implements UserService {
         userDao.delete(id);
     }
 
-    @Override
-    public User findByUserName(String name) {
-        return userDao.findByUserName(name);
-    }
 }

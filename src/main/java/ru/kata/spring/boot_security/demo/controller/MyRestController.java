@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.exceptionhandling.NoSuchUserException;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -31,9 +33,11 @@ public class MyRestController {
     }
 
     @PostMapping("/users")
-    public User addUser(@RequestBody User user) {
+    public ResponseEntity addUser(@RequestBody User user) {
+        System.out.println("----------Метод пост-рест начало, данные юзера: " + user);
         userService.save(user);
-        return userService.findById(user.getId());
+        System.out.println("==========Метод пост-рест конец...");
+        return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @PutMapping("/users")

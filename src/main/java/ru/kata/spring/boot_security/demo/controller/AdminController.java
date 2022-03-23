@@ -5,28 +5,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
-import javax.annotation.PostConstruct;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
-    @Autowired
-    private Set<Role> allRoles;
-
-    @PostConstruct
-    public void addUser() {
-        User user1 = new User("Ivan","Ivanov",25,"ivanov");
-        user1.setRoles(allRoles.stream().filter(n->n.getName().contains("ADMIN")).collect(Collectors.toList()));
-        userService.save(user1);
-    }
 
     @Autowired
     public AdminController(UserService userService) {
