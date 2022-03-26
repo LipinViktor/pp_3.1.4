@@ -4,51 +4,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.exceptionhandling.NoSuchUserException;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.Service;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
 public class MyRestController {
     @Autowired
-    private UserService userService;
+    private Service service;
 
     @GetMapping("/users")
-    public List<User> getAllUsers() {
-        List<User> allUsers = userService.findAll();
-        return allUsers;
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> allUsers = service.allUsers();
+        return allUsers != null && !allUsers.isEmpty()?
+                new ResponseEntity<>(allUsers, HttpStatus.OK):
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/users/{id}")
-    public User getUser(@PathVariable long id) {
-        User userFromDb = userService.findById(id);
-        if (userFromDb == null) {
-            throw new NoSuchUserException(
-                    "User with id = " + id + " not found in DataBase!!!");
-        }
-        return userFromDb;
+    public ResponseEntity<User> getUser(@PathVariable long id) {
+        User userFromDb = service.findUserById(id);
+        return userFromDb != null? new ResponseEntity<>(userFromDb, HttpStatus.OK):
+                new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/users")
-    public ResponseEntity addUser(@RequestBody User user) {
-        System.out.println("----------Метод пост-рест начало, данные юзера: " + user);
-        userService.save(user);
-        System.out.println("==========Метод пост-рест конец...");
-        return new ResponseEntity(user, HttpStatus.OK);
+    public ResponseEntity<?> addUser(@RequestBody User user) {
+        service.saveUser(user);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/users")
-    public User updateUser(@RequestBody User user) {
-        System.out.println("!!!!!Я ПУТ_РЕСТ И Я ВКЛЮЧИЛСЯ!!!!!"+user);
-        userService.update(user.getId(), user);
-        return userService.findById(user.getId());
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
+        service.updateUser(user);
+        return service.findUserById(user.getId()) != null?
+        new ResponseEntity<>(HttpStatus.OK):
+        new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @DeleteMapping("/users/{id}")
-    public void removeUser(@PathVariable long id) {
-        userService.delete(id);
+    public ResponseEntity<?> removeUser(@PathVariable long id) {
+        service.deleteUser(id);
+        return service.findUserById(id) == null?
+        new ResponseEntity<>(HttpStatus.OK):
+        new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 }

@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" style="height: 100%">
 <head>
     <meta charset="utf-8" xmlns:th="http://www.thymeleaf.org">
     <!-- Настройка viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin page</title>
+    <title>User page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
@@ -13,30 +13,30 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>User page</title>
 </head>
-<body>
+<body style="height: 100%">
 
 <div class="row">
-    <div class="col" style="padding: inherit">
-        <h5 th:text="${user.getSurName()} +' with role: '+ ${user.getRoles()}" class="bg-dark text-white"
-            style="padding-left: 25px" >
+    <div class="col" style="padding: 0%">
+        <h5 th:text="${user.getSurName()} +' with role: '+ ${principalRoles}" class="bg-dark text-white"
+            style="padding: 1.5%; padding-left: 5%; margin: 0" >
             My Page
         </h5>
     </div>
-    <div class="col" align="right" style="padding: inherit">
-        <h5 class="bg-dark text-white">
-            <a href="/logout" style="padding-right: 25px">
+    <div class="col" align="right" style="padding: 0%">
+        <h5 class="bg-dark text-white" style="padding: 1.5%; padding-right: 5%; margin: 0">
+            <a href="/logout" style="color: darkgray">
                 Logout
             </a>
         </h5>
     </div>
 </div>
-    <div class="row">
-        <div class="col-sm-2">
-            <nav class="navbar bg-light">
-                <ul class="list-group">
-                    <li class="list-group-item active">
-                        <a class="nav-link">
-                            <p class="text-body">User</p>
+    <div class="row" style="height: 100%; background: whitesmoke">
+        <div class="col-sm-2" style="height: 100%; background: white; padding: 0%">
+            <nav class="navbar bg-light" style="padding-top: 0; margin-top: 8%">
+                <ul class="list-group" style="width: 100%; height: 60%">
+                    <li class="list-group-item active" style="padding: 0">
+                        <a class="nav-link" style="color: black">
+                            User
                         </a>
                     </li>
                 </ul>
@@ -44,15 +44,13 @@
         </div>
         <div class="col-sm-10">
             <div>
-                <h3>User information-page</h3>
+                <h3 style="margin-left: 2%; padding: 1%">User information-page</h3>
             </div>
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#home">About user</a>
-                </li>
-            </ul>
+            <div>
+                <h5 style="margin: 0%; padding: 1%; padding-left: 4%; border: 1px solid Lavender">About User</h5>
+            </div>
             <div class="tab-content">
-                <div class="tab-pane container active" id="home">
+                <div style="background: white; padding: 3%; border:1px solid lavender">
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -69,7 +67,7 @@
                             <td th:text="${user.getName()}">Mark</td>
                             <td th:text="${user.getSurName()}">Otto</td>
                             <td th:text="${user.getAge()}">Age</td>
-                            <td th:text="${user.getRoles()}">Roles</td>
+                            <td th:text="${principalRoles}">Roles</td>
                         </tr>
                         </tbody>
                     </table>

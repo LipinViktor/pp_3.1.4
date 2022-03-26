@@ -3,7 +3,15 @@ $(function() {
     let tableList = document.getElementById("tBody");
     let editModal = document.getElementById("editModal");
     let deleteModal = document.getElementById("deleteModal");
-
+    function getRolesFromSelect(elementsSelect) {
+        let roleSelect = [];
+        for (var i = 0; i < elementsSelect.options.length; i++) {
+            if (elementsSelect.options[i].selected) {
+                roleSelect.push(elementsSelect.options[i].value);
+            }
+        };
+        return roleSelect;
+    }
     function newTable() {
         fetch(url)
             .then(resp => resp.json())
@@ -12,15 +20,15 @@ $(function() {
                 data.forEach(post => {
                     let arrayRoles = [];
                     post.roles.forEach(role => {
-                        arrayRoles.push(role.name);
+                        arrayRoles.push(role.name.substr(5));
                     });
                     out += `
                         <tr data-id="${post.id}">
-                            <td id="tdId">${post.id}</td>
-                            <td id="tdName">${post.name}</td>
-                            <td id="tdSurName">${post.surName}</td>
-                            <td id="tdAge">${post.age}</td>
-                            <td id="tdRoles">${arrayRoles}</td>
+                            <td>${post.id}</td>
+                            <td>${post.name}</td>
+                            <td>${post.surName}</td>
+                            <td>${post.age}</td>
+                            <td>${arrayRoles}</td>
                             <td>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="butEdit"
                                         data-bs-target="#editModal">
@@ -40,7 +48,6 @@ $(function() {
             });
     }
     newTable();
-
     tableList.addEventListener("click", (e) => {
         e.preventDefault();
         let editButPres = e.target.id == "butEdit";
@@ -69,14 +76,14 @@ $(function() {
             })
                 .then(setTimeout(function () {
                     newTable();
-                }, 800))
+                }, 700))
                 $("#deleteModal").modal("hide");
-
         });
         if(editButPres) {
             fetch(`${url}/${id}`)
                 .then(resp => resp.json())
                 .then(data => {
+                    $("#idE").attr("value", data.id);
                     $("#nameE").attr("value", data.name);
                     $("#surnameE").attr("value", data.surName);
                     $("#ageE").attr("value", data.age);
@@ -85,9 +92,7 @@ $(function() {
         }
         editModal.addEventListener("submit", (e) => {
             e.preventDefault();
-            let rolesList = [];
-            const roleEdit = document.getElementById("rolesE").value;
-            rolesList.push(roleEdit);
+            let rolesList = getRolesFromSelect(document.getElementById("rolesE"));
             fetch(url, {
                 method: "PUT",
                 headers: {
@@ -104,11 +109,9 @@ $(function() {
             })
                 .then(setTimeout(function () {
                     newTable();
-                }, 800))
+                }, 700))
                 $("#editModal").modal("hide");
-
         })
-
     });
 
     const adminPanel = document.getElementById("formPost");
@@ -116,12 +119,10 @@ $(function() {
     const surNameUser = document.getElementById("surnameValue");
     const ageUser = document.getElementById("ageValue");
     const passwordUser = document.getElementById("passwordValue");
-    const rolesUser = document.getElementById("roleValue");
+    let rolesUser = document.getElementById("roleValue");
     adminPanel.addEventListener("submit", (e) => {
         e.preventDefault();
-        let arrRolesAdd = [];
-        arrRolesAdd.push(rolesUser.value);
-        console.log(nameUser,surNameUser,ageUser,passwordUser,arrRolesAdd);
+        let rolesSelectPost = getRolesFromSelect(rolesUser);
         fetch(url, {
             method: "POST",
             headers: {
@@ -132,12 +133,12 @@ $(function() {
                 surName: surNameUser.value,
                 age: ageUser.value,
                 password: passwordUser.value,
-                roles: arrRolesAdd
+                roles: rolesSelectPost
             })
         })
             setTimeout(function () {
                 newTable();
-            }, 5000)
+            }, 700)
         $("#nav-home-tab").tab("show")
     })
 })

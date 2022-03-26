@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%">
 <head>
     <meta charset="utf-8" xmlns:th="http://www.thymeleaf.org">
     <!-- Настройка viewport -->
@@ -11,49 +11,51 @@
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="height: 100%">
 
 <div class="row">
-    <div class="col" style="padding: inherit">
-        <h5 class="bg-dark text-white" style="padding-left: 25px" th:text="${princ.getSurName()} +' with role: '+ ${princ.getRoles()}"
+    <div class="col" style="padding: 0">
+        <h5 class="bg-dark text-white" style="padding: 1.5%; padding-left: 5%; margin: 0"
+            th:text="${surName} +' with role: '+ ${rolesUser}"
             id="myTitle">
             My Page
         </h5>
     </div>
-    <div class="col" align="right" style="padding: inherit">
-        <h5 class="bg-dark text-white" style="padding-right: 25px">
-            <a href="/logout">
+    <div class="col" align="right" style="padding: 0">
+        <h5 class="bg-dark text-white" style="padding: 1.5%; padding-right: 5%; margin: 0">
+            <a href="/logout" style="color: darkgray">
                 Logout
             </a>
         </h5>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-sm-2">
-        <nav class="navbar bg-light">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    <a class="nav-link" href="/user">
-                        <p class="text-body">User</p>
+<div class="row g-0" style="height: 100%; background: whitesmoke">
+    <div class="col-sm-2" style="height: 100%; background: white">
+        <nav class="navbar bg-light" style="padding-top: 0; margin-top: 8%">
+            <ul class="list-group" style="width: 100%; height: 60%">
+                <li class="list-group-item" style="padding: 0">
+                    <a class="nav-link" href="/user" style="color: black">
+                        User
                     </a>
                 </li>
-                <li class="list-group-item active">
-                    <a class="nav-link" href="/admin">
-                        <p class="text-body">Admin</p>
+                <li class="list-group-item active" style="padding: 0">
+                    <a class="nav-link" href="/admin" style="color: black">
+                        Admin
                     </a>
                 </li>
             </ul>
         </nav>
     </div>
-    <div class="col-sm-10">
+    <div class="col-sm-10" style="height: 10%">
         <div>
-            <h3>Admin panel</h3>
+            <h3 style="margin-left: 2%; padding: 1%">Admin panel</h3>
         </div>
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
-                        type="button" role="tab" aria-controls="nav-home" aria-selected="true">Users table
+                        type="button" style="margin-left: 2%" role="tab" aria-controls="nav-home" aria-selected="true">
+                    Users table
                 </button>
                 <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
                         type="button" role="tab" aria-controls="nav-profile" aria-selected="false">New User
@@ -61,31 +63,35 @@
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                <div class="col">
-                    <h5 class="bg-secondary text-white">All users</h5>
+            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
+                 style="margin-left: 2%; margin-right: 2%; background: white; border-color: darkgray">
+                <div class="col" style="background: whitesmoke">
+                    <h5 style="padding: 1%; color: black; margin: 0%; border:1px solid lavender">All users</h5>
                 </div>
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">SurName</th>
-                        <th scope="col">Age</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Edit</th>
-                        <th scope="col">Delete</th>
-                    </tr>
-                    </thead>
-                    <tbody id="tBody">
-                    </tbody>
-                </table>
+                <div style="background: white; padding: 3%; border:1px solid lavender">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">SurName</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tBody">
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                <div class="col">
-                    <h5 class="bg-secondary text-white">Add new User</h5>
+            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"
+                 style="padding: 2%">
+                <div class="col" style="background: whitesmoke">
+                    <h5 style="padding: 1%; color: black">Add new User</h5>
                 </div>
-                <form id="formPost">
+                <form id="formPost" style="background: white">
                     <div class="form-group" align="center">
                         <label for="nameValue">Enter name:</label>
                         </br>
@@ -99,7 +105,7 @@
                     <div class="form-group" align="center">
                         <label for="ageValue">Enter age:</label>
                         </br>
-                        <input type="number" id="ageValue"/>
+                        <input required type="number" id="ageValue"/>
                     </div>
                     <div class="form-group" align="center">
                         <label for="passwordValue">Enter password:</label>
@@ -109,138 +115,145 @@
                     <div class="form-group" align="center">
                         <label for="roleValue">Enter role:</label>
                         </br>
-                        <select id="roleValue" form="formPost" name="roles">
-                            <option>ROLE_USER</option>
+                        <select required id="roleValue" multiple name="roles[]" form="formPost">
                             <option>ROLE_ADMIN</option>
+                            <option>ROLE_USER</option>
                         </select>
                     </div>
                     <div align="center">
                         </br>
-                            <button type="submit" class="btn btn-primary">Add new User</button>
+                            <button type="submit" class="btn btn-primary" style="margin: 3%">Add new User</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <!-- Modal Edit-->
+    <div class="modal fade" tabindex="-1" id="editModal"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <form id="patch">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div align="center">
+                            <label for="idE">Id: </label>
+                            <br/>
+                            <input disabled required type="text" name="name" id="idE"/>
+                        </div>
+                        <br/>
+                        <div align="center">
+                            <label for="nameE">Enter name: </label>
+                            <br/>
+                            <input required type="text" name="name" id="nameE"/>
+                        </div>
+                        <br/>
+                        <div align="center">
+                            <label for="surnameE">Enter surname: </label>
+                            <br/>
+                            <input required type="text" name="surName" id="surnameE"/>
+                        </div>
+                        <br/>
+                        <div align="center">
+                            <label for="ageE">Enter age: </label>
+                            <br/>
+                            <input required type="number" name="age" id="ageE"/>
+                        </div>
+                        <br/>
+                        <div align="center">
+                            <label for="passwordE">Enter password: </label>
+                            <br/>
+                            <input required type="password" name="password" id="passwordE"/>
+                        </div>
+                        <br/>
+                        <div align="center">
+                            <label for="rolesE">Enter role: </label>
+                            <br/>
+                            <select id="rolesE" required multiple size="2" form="patch" name="roles">
+                                <option>ROLE_USER</option>
+                                <option>ROLE_ADMIN</option>
+                            </select>
+                        </div>
+                        <br/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Modal Delete-->
+    <div class="modal fade" tabindex="-1" id="deleteModal"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <form id="delete">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" >Delete User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div align="center">
+                            <label for="idD">Id: </label>
+                            <br/>
+                            <input disabled type="text" id="idD"/>
+                        </div>
+                        <br/>
+                        <div align="center">
+                            <label for="nameD">Name: </label>
+                            <br/>
+                            <input disabled type="text" id="nameD"/>
+                        </div>
+                        <br/>
+                        <div align="center">
+                            <label for="surnameD">Surname: </label>
+                            <br/>
+                            <input disabled type="text" id="surnameD"/>
+                        </div>
+                        <br/>
+                        <div align="center">
+                            <label for="ageD">Age: </label>
+                            <br/>
+                            <input disabled type="number" id="ageD"/>
+                        </div>
+                        <br/>
+                        <div align="center">
+                            <label for="passwordD">Password: </label>
+                            <br/>
+                            <input disabled type="password" id="passwordD"/>
+                        </div>
+                        <br/>
+                        <div align="center">
+                            <label for="rolesD">Role: </label>
+                            <br/>
+                            <input disabled type="text" id="rolesD"/>
+                        </div>
+                        <br/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
-<!-- Modal Edit-->
-<div class="modal fade" tabindex="-1" id="editModal"
-     aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <form id="patch">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit User</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div align="center">
-                        <label for="nameE">Enter name: </label>
-                        <br/>
-                        <input required type="text" name="name" id="nameE"/>
-                    </div>
-                    <br/>
-                    <div align="center">
-                        <label for="surnameE">Enter surname: </label>
-                        <br/>
-                        <input required type="text" name="surName" id="surnameE"/>
-                    </div>
-                    <br/>
-                    <div align="center">
-                        <label for="ageE">Enter age: </label>
-                        <br/>
-                        <input type="number" name="age" id="ageE"/>
-                    </div>
-                    <br/>
-                    <div align="center">
-                        <label for="passwordE">Enter password: </label>
-                        <br/>
-                        <input required type="password" name="password" id="passwordE"/>
-                    </div>
-                    <br/>
-                    <div align="center">
-                        <label for="rolesE">Enter role: </label>
-                        <br/>
-                        <select id="rolesE" form="patch" name="roles">
-                            <option>ROLE_USER</option>
-                            <option>ROLE_ADMIN</option>
-                        </select>
-                    </div>
-                    <br/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-<!-- Modal Delete-->
-<div class="modal fade" tabindex="-1" id="deleteModal"
-     aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <form id="delete">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" >Delete User</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div align="center">
-                        <label for="idD">Id: </label>
-                        <br/>
-                        <input disabled type="text" id="idD"/>
-                    </div>
-                    <br/>
-                    <div align="center">
-                        <label for="nameD">Name: </label>
-                        <br/>
-                        <input disabled type="text" id="nameD"/>
-                    </div>
-                    <br/>
-                    <div align="center">
-                        <label for="surnameD">Surname: </label>
-                        <br/>
-                        <input disabled type="text" id="surnameD"/>
-                    </div>
-                    <br/>
-                    <div align="center">
-                        <label for="ageD">Age: </label>
-                        <br/>
-                        <input disabled type="number" id="ageD"/>
-                    </div>
-                    <br/>
-                    <div align="center">
-                        <label for="passwordD">Password: </label>
-                        <br/>
-                        <input disabled type="password" id="passwordD"/>
-                    </div>
-                    <br/>
-                    <div align="center">
-                        <label for="rolesD">Role: </label>
-                        <br/>
-                        <input disabled type="text" id="rolesD"/>
-                    </div>
-                    <br/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="/javascript/crud.js"></script>
 
