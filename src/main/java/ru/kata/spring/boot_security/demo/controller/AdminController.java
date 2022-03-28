@@ -10,7 +10,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,7 +30,9 @@ public class AdminController {
         service.saveRole(roleAdmin);
         service.saveRole(roleUser);
         User user = new User("Ivan","Ivanov",23,"ivanov");
-        user.setRoles(service.allRoles());
+        user.setRoles(service.allRoles().stream()
+                .filter(e -> e.getName().equals("ROLE_ADMIN"))
+                .collect(Collectors.toList()));
         service.saveUser(user);
     }
 

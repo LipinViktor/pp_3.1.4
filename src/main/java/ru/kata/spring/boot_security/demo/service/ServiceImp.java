@@ -8,8 +8,6 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,9 +16,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class ServiceImp implements Service {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
@@ -68,7 +64,7 @@ public class ServiceImp implements Service {
     public void updateUser(User user) {
         user.setRoles(user.getRoles().stream().map(e -> findRoleByName(e.getName())).collect(Collectors.toList()));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        entityManager.merge(user);
+        userRepository.save(user);
     }
 
     @Override

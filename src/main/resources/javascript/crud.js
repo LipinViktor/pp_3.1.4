@@ -44,10 +44,10 @@ $(function() {
                         </tr>`;
                 });
                 tableList.innerHTML = out;
-                out = "";
             });
     }
     newTable();
+
     tableList.addEventListener("click", (e) => {
         e.preventDefault();
         let editButPres = e.target.id == "butEdit";
@@ -69,16 +69,6 @@ $(function() {
                     $('#rolesD').attr("value", arrRolesD)
                 })
         }
-        deleteModal.addEventListener("submit", (e) => {
-            e.preventDefault();
-            fetch(`${url}/${id}`, {
-                method: "delete"
-            })
-                .then(setTimeout(function () {
-                    newTable();
-                }, 700))
-                $("#deleteModal").modal("hide");
-        });
         if(editButPres) {
             fetch(`${url}/${id}`)
                 .then(resp => resp.json())
@@ -90,28 +80,41 @@ $(function() {
                     $("#passwordE").attr("value", data.password);
                 })
         }
-        editModal.addEventListener("submit", (e) => {
-            e.preventDefault();
-            let rolesList = getRolesFromSelect(document.getElementById("rolesE"));
-            fetch(url, {
-                method: "PUT",
-                headers: {
-                    "Content-type": "application/json; charset=utf-8"
-                },
-                body: JSON.stringify({
-                    id: id,
-                    name: document.getElementById("nameE").value,
-                    surName: document.getElementById("surnameE").value,
-                    age: document.getElementById("ageE").value,
-                    password: document.getElementById("passwordE").value,
-                    roles: rolesList
-                })
+    });
+
+    editModal.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let rolesList = getRolesFromSelect(document.getElementById("rolesE"));
+        fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-type": "application/json; charset=utf-8"
+            },
+            body: JSON.stringify({
+                id: document.getElementById("idE").value,
+                name: document.getElementById("nameE").value,
+                surName: document.getElementById("surnameE").value,
+                age: document.getElementById("ageE").value,
+                password: document.getElementById("passwordE").value,
+                roles: rolesList
             })
-                .then(setTimeout(function () {
-                    newTable();
-                }, 700))
-                $("#editModal").modal("hide");
         })
+        setTimeout(function () {
+            newTable();
+        }, 1000)
+        $("#editModal").modal("hide");
+    })
+
+    deleteModal.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const idD = document.getElementById("idD")
+        fetch(`${url}/${idD.value}`, {
+            method: "delete"
+        })
+            .then(setTimeout(function () {
+                newTable();
+            }, 1000))
+        $("#deleteModal").modal("hide");
     });
 
     const adminPanel = document.getElementById("formPost");
@@ -138,7 +141,7 @@ $(function() {
         })
             setTimeout(function () {
                 newTable();
-            }, 700)
+            }, 1000)
         $("#nav-home-tab").tab("show")
     })
 })

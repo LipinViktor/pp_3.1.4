@@ -20,7 +20,7 @@ public class MyRestController {
         List<User> allUsers = service.allUsers();
         return allUsers != null && !allUsers.isEmpty()?
                 new ResponseEntity<>(allUsers, HttpStatus.OK):
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                new ResponseEntity<>(allUsers, HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/users/{id}")
